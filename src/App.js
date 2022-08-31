@@ -12,6 +12,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 // mask
 import { mask, unMask } from 'remask';
+import Backdrop from './components/Backdrop';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -19,7 +20,11 @@ function Alert(props) {
 function App() {
   const [habimp, setHabimp] = React.useState(false);
   const [dadoInscrito, setDadoInscrito] = useState('');
+
   const [dados, setDados] = React.useState();
+  const [dadosImpre, setDadosImpre] = React.useState();
+  const [showinput, setShowinput] = useState(true);
+
   const handleChange = (e) => {
     setDadoInscrito(
       mask(unMask(e.target.value), [
@@ -37,10 +42,18 @@ function App() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setShowinput(false);
 
     if (dadoInscrito.length === 9 || dadoInscrito.length === 10) {
       let response = await getApi(dadoInscrito, 'code');
       if (response) {
+        setDadosImpre({
+          show: true,
+          id_code: response?.code,
+          credential_name: response?.name,
+          credential_company: response?.company,
+          credential_role: response?.note,
+        });
         setDados({
           show: true,
           id_code: response?.code,
@@ -53,6 +66,13 @@ function App() {
       let response = await getApi(dadoInscrito, 'cpf');
       console.log('[response]=> ', response);
       if (response) {
+        setDadosImpre({
+          show: true,
+          id_code: response?.code,
+          credential_name: response?.name,
+          credential_company: response?.company,
+          credential_role: response?.note,
+        });
         setDados({
           show: true,
           id_code: response?.code,
@@ -75,7 +95,11 @@ function App() {
     window.print();
     setHabimp(true);
     setDadoInscrito('');
-    setTimeout(() => setHabimp(false), 5000);
+    setTimeout(() => {
+      setShowinput(true);
+      setHabimp(false);
+      document.querySelector('#input_cpf').focus();
+    }, 5000);
   };
 
   const verificarNome = (e) => {
@@ -147,13 +171,16 @@ function App() {
 
                 <form className="etiqueta" action="" onSubmit={handleSubmit}>
                   <p>Nº de Inscrição ou CPF</p>
-                  <input
-                    type="text"
-                    placeholder=""
-                    value={dadoInscrito}
-                    onChange={handleChange}
-                    autoFocus
-                  />
+                  {showinput && (
+                    <input
+                      type="text"
+                      placeholder=""
+                      id="input_cpf"
+                      value={dadoInscrito}
+                      onChange={handleChange}
+                      autoFocus
+                    />
+                  )}
                   <div className="containerButton">
                     <button type="submit">Buscar</button>
                   </div>
@@ -200,13 +227,20 @@ function App() {
                   dados={dados}
                   confirmar={() => {
                     setDados({ ...dados, show: false });
-                    novaImpressao();
+                    setTimeout(() => {
+                      novaImpressao();
+                    }, 25);
+
                     setTimeout(() => {
                       setDados('');
                       setDadoInscrito('');
                     }, 50);
                   }}
-                  cancelar={() => setDados('')}
+                  cancelar={() => {
+                    setDados('');
+                    setShowinput(true);
+                    document.querySelector('#input_cpf').focus();
+                  }}
                 />
               )}
             </div>
@@ -239,24 +273,27 @@ function App() {
               </div>
             </div>
           )}
+          {!showinput && !dados?.show && <Backdrop />}
         </Contentout>
       </div>
-      {dados && (
+      {dadosImpre && (
         <div
           className="etiqueta etiqueta2"
           id="printable"
           style={{
             width: '10cm',
-            height: '5cm',
+            height: '4cm',
           }}
         >
           <div className="informacoes" id="sua_div">
             <span className="nomeCredencial">
-              {verificarNome(dados?.credential_name)}
+              {verificarNome(dadosImpre?.credential_name)}
             </span>
-            <span className="demaisCredencial">{dados?.credential_role}</span>
+            <span className="demaisCredencial">
+              {dadosImpre?.credential_role}
+            </span>
             <span className="demaisCredencial2">
-              {dados?.credential_company}
+              {dadosImpre?.credential_company}
             </span>
             <div className="div__cod_barra">
               <svg id="barcode1"></svg>
