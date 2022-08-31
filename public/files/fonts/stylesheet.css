@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Hypermarket';
+  src: url('Hypermarket-Bold.eot');
+  src: local('Hypermarket Bold'), local('Hypermarket-Bold'),
+    url('Hypermarket-Bold.eot?#iefix') format('embedded-opentype'),
+    url('Hypermarket-Bold.woff2') format('woff2'),
+    url('Hypermarket-Bold.woff') format('woff'),
+    url('Hypermarket-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
