@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: url('../files/images/image_bg_credenciado.jpg');
+  background: url('../files/images/ufc_event.png');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -23,7 +23,7 @@ export const Container = styled.div`
       display:flex;
       justify-content: space-around;
       align-items:center;
-      gap: 2rem;
+      gap: 4rem;
       .div__content_image{
         max-width: 450px;
         position: relative;
@@ -71,6 +71,7 @@ export const Container = styled.div`
         border-radius: 8px;
       }
       button{
+        cursor: pointer;
         width: 100%;
         font-size: 1.5rem;
         padding: 0.5rem  1.2rem;
@@ -123,8 +124,9 @@ export const Container = styled.div`
     background-image: linear-gradient(
       to top,
       rgba(0, 0, 0, 1),
-      rgba(0, 0, 0, 0.6)
-    );
+      rgba(3,197,140,0.8)
+      );
+      /* rgba(0, 0, 0, 0.6) */
   }
  
 `;

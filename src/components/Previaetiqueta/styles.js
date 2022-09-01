@@ -118,11 +118,10 @@ export const Container = styled.div`
         text-transform: uppercase;
         margin: auto;
         position: relative;
-        top: 73%;
+        top: 72%;
         left: 0;
         right: 0;
         /* max-width: 290px; */
-        width: 98mm;
         height: 29mm;
         background-color: rgba(255, 255, 255, 1);
         display: flex;

@@ -185,7 +185,7 @@ function App() {
                     <button type="submit">Buscar</button>
                   </div>
                   <div className="div__list_logos">
-                    <h4>Organização</h4>
+                    <h4>Empresas do grupo</h4>
                     <img
                       src="../files/images/list-logos.png"
                       alt="Logo Ágil Engenharia"
