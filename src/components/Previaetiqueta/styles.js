@@ -103,7 +103,7 @@ export const Container = styled.div`
       text-align: center;
       font-size: 0.5cm;
       border: 1px solid rgba(0, 0, 0, 0.2);
-      font-family: 'Hypermarket' !important;
+      font-family: 'Arial' !important;
       /* border-radius: 10px; */
       /* padding: 1.5rem 1rem; */
       margin: 4rem 0rem;
@@ -136,12 +136,12 @@ export const Container = styled.div`
           font-size: 0.59cm;
           margin: 0;
           font-weight: 800;
-          font-family: 'Hypermarket' !important;
+          font-family: 'Arial' !important;
         }
         .infor2 {
           margin: 0;
           font-size: 0.4cm;
-          font-weight: 500;
+          font-weight: 600;
         }
 
         .div__cod_barra {

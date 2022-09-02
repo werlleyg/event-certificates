@@ -44,29 +44,29 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-family: 'Hypermarket' !important;
+    font-family: 'Arial' !important;
   }
   .nomeCredencial {
     font-size: 0.62cm;
     margin: 0;
     font-weight: 800;
-    font-family: 'Hypermarket' !important;
+    font-family: 'Arial' !important;
   }
   .demaisCredencial {
     margin: 0;
     font-size: 0.5cm;
-    font-weight: 500;
-    font-family: 'Hypermarket' !important;
+    font-weight: 600;
+    font-family: 'Arial' !important;
   }
   .demaisCredencial2 {
     margin: 0;
     font-size: 0.5cm;
-    font-weight: 500;
-    font-family: 'Hypermarket' !important;
+    font-weight: 600;
+    font-family: 'Arial' !important;
   }
   .div__cod_barra {
     font-size: 0.4cm;
-    font-family: 'Hypermarket' !important;
+    font-family: 'Arial' !important;
   }
 }
 .etiqueta2 {
