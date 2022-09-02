@@ -153,7 +153,7 @@ function App() {
           type: 'error',
           message: 'Erro ao comunicar com sistema',
         });
-
+        setShowinput(true);
         auxResponse = false;
       });
     return auxResponse;
