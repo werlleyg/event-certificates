@@ -88,6 +88,7 @@ function App() {
         type: 'warning',
         message: 'Preencha a inscrição corretamente',
       });
+      setShowinput(true);
     }
   }
 

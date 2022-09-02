@@ -21,7 +21,7 @@ export default function Backdrop() {
   };
 
   React.useEffect((e) => {
-    setTimeout((e) => (msgerro === false ? setMsgerro(true) : ''), 60000);
+    // setTimeout((e) => (msgerro === false ? setMsgerro(true) : ''), 60000);
   });
 
   return (
