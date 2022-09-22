@@ -12,6 +12,10 @@ import JsBarcode from 'jsbarcode';
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(true);
   const [dados, setDados] = React.useState(props.dados);
+  const [listBgs, setListBgs] = React.useState({
+    telecom: '../files/images/bg_credencial.jpg',
+    sst: '../files/images/bg_credencial_sst.jpg',
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,6 +64,17 @@ export default function AlertDialog(props) {
     return name;
   };
 
+  function checkBackgroundImage() {
+    if (
+      props.selectedEvent?.title?.toLowerCase().indexOf('nr10') > -1 &&
+      props.selectedEvent?.title?.toLowerCase().indexOf('nr35') > -1
+    ) {
+      return listBgs.sst;
+    } else {
+      return listBgs.telecom;
+    }
+  }
+
   React.useEffect(() => {
     setTimeout(() => {
       JsBarcode('#barcode1', props.dados.id_code, {
@@ -96,7 +111,11 @@ export default function AlertDialog(props) {
             id="alert-dialog-description"
             style={{ padding: 0, margin: 0 }}
           >
-            <Container>
+            <Container
+              averageColor={props.averageColor}
+              credencialfundo={checkBackgroundImage}
+            >
+              {console.log('Average color => ', props.averageColor)}
               <div className="cardParaImpressao">
                 {dados ? (
                   <div className="comDados">
@@ -115,7 +134,7 @@ export default function AlertDialog(props) {
                       <div className="informacoes" id="sua_div">
                         <p>{verificarNome(dados.credential_name)}</p>
 
-                        <p className="infor2">{dados.credential_role}</p>
+                        {/* <p className="infor2">{dados.credential_role}</p> */}
                         <p className="infor2">{dados.credential_company}</p>
                         {/* testes */}
                         <div className="div__cod_barra">

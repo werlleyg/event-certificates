@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // import buttonImage from '../files/images/button-image.png';
 // import Fundo from '../../files/images/develop/banner1.jpg';
 
-const credencialfundo = '../files/images/bg_credencial.jpg';
+// const credencialfundo = '../files/images/bg_credencial.jpg';
 const buttonImage = '../files/images/button-image.png';
 const Fundo = '';
 export const Container = styled.div`
@@ -80,7 +80,8 @@ export const Container = styled.div`
             padding: 1rem;
             color: #fff;
             /* background-color:rgb(255,182,0); */
-            background-color: #03c58c;
+            background-color: ${(props) =>
+              'rgba(' + props.averageColor?.terc_color + ')'};
             border-radius: 10px;
             cursor: pointer;
             .button__image {
@@ -107,7 +108,7 @@ export const Container = styled.div`
       /* border-radius: 10px; */
       /* padding: 1.5rem 1rem; */
       margin: 4rem 0rem;
-      background-image: url(${credencialfundo}) !important;
+      background-image: url(${(props) => props.credencialfundo}) !important;
       /* background: orange; */
       /* background:  #adfdea; */
       background-position: center;
