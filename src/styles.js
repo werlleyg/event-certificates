@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: url('../files/images/ufc_event.png');
+  background: url(${(props) => props.imageBg});
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -16,24 +16,26 @@ export const Container = styled.div`
     padding: 3rem 1rem;
     margin: 0;
 
-    .div__oneRow{
+    .div__oneRow {
       width: 100%;
       max-width: 1920px;
-      margin:auto;
-      display:flex;
+      margin: auto;
+      display: flex;
       justify-content: space-around;
-      align-items:center;
-      gap: 4rem;
-      .div__content_image{
-        max-width: 450px;
+      align-items: center;
+      gap: 10rem;
+      .div__content_image {
+        max-width: 650px;
+        max-height: 80vh;
         position: relative;
-        img{
+        img {
           max-width: 100%;
+          max-height: 80vh;
           border-radius: 8px;
-          box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+          box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
         }
-        .div__degrade_img{
-          z-index:: 1;
+        .div__degrade_img {
+          z-index: 1;
           position: absolute;
           top: 0;
           left: 0;
@@ -46,9 +48,9 @@ export const Container = styled.div`
           ); */
         }
       }
-      
-      @media only screen and (max-width: 811px){
-          flex-direction: column-reverse;
+
+      @media only screen and (max-width: 811px) {
+        flex-direction: column-reverse;
       }
     }
     form {
@@ -56,29 +58,34 @@ export const Container = styled.div`
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      p{
+      p {
         color: white;
         font-size: 1.5rem;
         font-weight: 800;
         text-transform: uppercase;
-        text-shadow: 0px 0px 20px rgba(0,0,0);
+        text-shadow: 0px 0px 20px rgba(0, 0, 0);
       }
-      input{
+      input {
         font-size: 1.5rem;
-        padding: 0.5rem  1.2rem;
+        padding: 0.5rem 1.2rem;
         outline-color: transparent;
         border: 0;
         border-radius: 8px;
       }
-      button{
+      button {
         cursor: pointer;
         width: 100%;
         font-size: 1.5rem;
-        padding: 0.5rem  1.2rem;
-        background-image: linear-gradient(to top, #00FE7A, #03C58C);
+        padding: 0.5rem 1.2rem;
+        background-image: ${(props) =>
+          'linear-gradient(to top,rgba(' +
+          props.averageColor?.terc_color +
+          '),rgba(' +
+          props.averageColor?.terc_color +
+          '))'};
         border: 0;
         border-radius: 5rem;
-        color: #2f2f2;
+        color: #f2f2f2;
         font-weight: 400;
         text-transform: uppercase;
         margin-top: 1rem;
@@ -86,35 +93,34 @@ export const Container = styled.div`
         outline-offset: 2px;
         transition: 0.3s;
 
-        :hover{
+        :hover {
           transform: scale(1.01);
           opacity: 0.8;
         }
       }
 
-      .div__list_logos{
-        
+      .div__list_logos {
         margin-top: 3rem;
         flex-direction: column;
         display: flex;
-        align-items:center;
-        justify-content:center;
+        align-items: center;
+        justify-content: center;
         gap: 0.5rem;
-        h4{
+        h4 {
           color: white;
           margin-bottom: 0rem;
           padding-bottom: 0rem;
           font-size: 1rem;
           font-weight: 200;
         }
-        img{
+        img {
           max-width: 300px;
         }
       }
     }
   }
   .div__bg_gradient {
-    z-index:: 1;
+    z-index: 1;
     position: fixed;
     top: 0;
     left: 0;
@@ -124,11 +130,10 @@ export const Container = styled.div`
     background-image: linear-gradient(
       to top,
       rgba(0, 0, 0, 1),
-      rgba(3,197,140,0.8)
-      );
-      /* rgba(0, 0, 0, 0.6) */
+      ${(props) => 'rgba(' + props.averageColor?.terc_color + ', 0.8)'}
+    );
+    /* rgba(0, 0, 0, 0.6) */
   }
- 
 `;
 
 export const Contentout = styled.div`

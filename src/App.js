@@ -13,9 +13,14 @@ import MuiAlert from '@material-ui/lab/Alert';
 // mask
 import { mask, unMask } from 'remask';
 import Backdrop from './components/Backdrop';
+import { useEffect } from 'react';
+
+// get img color
+import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
+import Color, { Palette, usePalette } from 'color-thief-react';
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 function App() {
   const [habimp, setHabimp] = React.useState(false);
@@ -24,6 +29,8 @@ function App() {
   const [dados, setDados] = React.useState();
   const [dadosImpre, setDadosImpre] = React.useState();
   const [showinput, setShowinput] = useState(true);
+  const [averageColor, setAverageColor] = useState();
+  const [selectedEvent, setSelectedEvent] = useState();
 
   const handleChange = (e) => {
     setDadoInscrito(
@@ -158,38 +165,81 @@ function App() {
       });
     return auxResponse;
   }
+
+  async function getEvents() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('evento');
+    console.log('[ID DO EVENTO] =>', myParam);
+
+    if (myParam) {
+      await api
+        .get('/events')
+        .then((response) => {
+          let result = response.data.find(
+            (dataValue) => dataValue.id === Number(myParam),
+          );
+          if (result) {
+            setSelectedEvent(result);
+          }
+          if (result) console.log('[result]', result);
+        })
+        .catch((error) => {
+          console.log('[error]=> ', error.data);
+        });
+    }
+  }
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
+  useEffect(() => {
+    // const colorThief = new ColorThief();
+    // const img = new Image();
+    // img.addEventListener('load', function () {
+    //   let resultColor = colorThief.getColor(img);
+    //   console.log('[cor resultante]=> ', resultColor);
+    // });
+    // img.crossOrigin = 'Anonymous';
+    // img.src =
+    //   'https://agil-eng.s3.amazonaws.com/alanaraujo/04ed10756630-Post_AlanAraujo_AgilEngenharia_1900x1054px_SegurancadoTrabalho_UrucuiPi.png';
+  }, [selectedEvent]);
+
   return (
     <>
-      <div className="App">
+      <div className='App'>
         <Contentout>
-          <Container>
-            <div className="div__content">
-              <div className="div__oneRow">
-                <div className="div__content_image">
-                  <img src="../files/images/ufc_event.png" />
-                  <div className="div__degrade_img" alt="Banner Alan Araújo" />
+          <Container
+            imageBg={selectedEvent?.image_url}
+            averageColor={averageColor}
+          >
+            <div className='div__content'>
+              <div className='div__oneRow'>
+                <div className='div__content_image'>
+                  <img src={selectedEvent?.image_url} id='event_image' />
+                  <div className='div__degrade_img' alt='Banner Alan Araújo' />
                 </div>
 
-                <form className="etiqueta" action="" onSubmit={handleSubmit}>
+                <form className='etiqueta' action='' onSubmit={handleSubmit}>
                   <p>Nº de Inscrição ou CPF</p>
                   {showinput && (
                     <input
-                      type="text"
-                      placeholder=""
-                      id="input_cpf"
+                      type='text'
+                      placeholder=''
+                      id='input_cpf'
                       value={dadoInscrito}
                       onChange={handleChange}
                       autoFocus
                     />
                   )}
-                  <div className="containerButton">
-                    <button type="submit">Buscar</button>
+                  <div className='containerButton'>
+                    <button type='submit'>Buscar</button>
                   </div>
-                  <div className="div__list_logos">
+                  <div className='div__list_logos'>
                     <h4>Empresas do grupo</h4>
                     <img
-                      src="../files/images/list-logos.png"
-                      alt="Logo Ágil Engenharia"
+                      src='../files/images/list-logos.png'
+                      alt='Logo Ágil Engenharia'
                     />
                   </div>
                 </form>
@@ -246,28 +296,28 @@ function App() {
               )}
             </div>
 
-            <div className="div__bg_gradient" />
+            <div className='div__bg_gradient' />
           </Container>
           {dados && (
             <div
-              className="etiqueta etiqueta2"
-              id="printable"
+              className='etiqueta etiqueta2'
+              id='printable'
               style={{
                 width: '9.8cm',
                 height: '2.5cm',
               }}
             >
-              <div className="informacoes" id="sua_div">
-                <span className="nomeCredencial">
+              <div className='informacoes' id='sua_div'>
+                <span className='nomeCredencial'>
                   {verificarNome(dados.credential_name)}
                 </span>
-                <span className="demaisCredencial">
+                <span className='demaisCredencial'>
                   {dados.credential_role}
                 </span>
-                <span className="demaisCredencial2">
+                <span className='demaisCredencial2'>
                   {dados.credential_company}
                 </span>
-                <div className="div__cod_barra">
+                <div className='div__cod_barra'>
                   {dados.id_code}
                   {/* <svg id="barcode1"></svg> */}
                 </div>
@@ -279,29 +329,60 @@ function App() {
       </div>
       {dadosImpre && (
         <div
-          className="etiqueta etiqueta2"
-          id="printable"
+          className='etiqueta etiqueta2'
+          id='printable'
           style={{
             width: '10cm',
             height: '4cm',
           }}
         >
-          <div className="informacoes" id="sua_div">
-            <span className="nomeCredencial">
+          <div className='informacoes' id='sua_div'>
+            <span className='nomeCredencial'>
               {verificarNome(dadosImpre?.credential_name)}
             </span>
-            <span className="demaisCredencial">
+            <span className='demaisCredencial'>
               {dadosImpre?.credential_role}
             </span>
-            <span className="demaisCredencial2">
+            <span className='demaisCredencial2'>
               {dadosImpre?.credential_company}
             </span>
-            <div className="div__cod_barra">
-              <svg id="barcode1"></svg>
+            <div className='div__cod_barra'>
+              <svg id='barcode1'></svg>
             </div>
           </div>
         </div>
       )}
+      {/* <Color
+        src={selectedEvent?.image_url}
+        crossOrigin='anonymous'
+        format='rgbArray'
+      >
+        {({ data, loading, error }) => {
+          if (data) {
+            let auxColor = data[0] + ',' + data[1] + ',' + data[2];
+            setAverageColor(auxColor);
+            console.log('[cor predominante]=> ', auxColor);
+          }
+        }}
+      </Color> */}
+      <Palette
+        src={selectedEvent?.image_url}
+        colorCount={3}
+        crossOrigin='anonymous'
+        format='rgbArray'
+      >
+        {({ data, loading, error }) => {
+          if (data && !averageColor) {
+            let auxColors = {
+              first_color: data[0][0] + ',' + data[0][1] + ',' + data[0][2],
+              second_color: data[1][0] + ',' + data[1][1] + ',' + data[1][2],
+              terc_color: data[2][0] + ',' + data[2][1] + ',' + data[2][2],
+            };
+            setAverageColor(auxColors);
+            console.log('[cores predominantes]=> ', auxColors);
+          }
+        }}
+      </Palette>
     </>
   );
 }
