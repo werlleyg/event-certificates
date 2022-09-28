@@ -1,3 +1,8 @@
+:root {
+  --primary-color: 6, 214, 160;
+  --wpp-color: 52, 175, 35;
+  --gmail-color: 234, 67, 53;
+}
 .App {
   text-align: center;
 }

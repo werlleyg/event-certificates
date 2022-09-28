@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, Contentout } from './styles';
 import './App.css';
 
+// react-router-dom
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // ticket preview
 import Previaetiqueta from './components/Previaetiqueta';
 
@@ -19,11 +21,24 @@ import { useEffect } from 'react';
 import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 import Color, { Palette, usePalette } from 'color-thief-react';
 import { Loader } from './components/Loader';
+import { SearchCertificate } from './pages/SearchCertificate';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
 function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/certificado" element={<SearchCertificate />} />
+        <Route path="/" element={<PrintCredential />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function PrintCredential() {
   const [habimp, setHabimp] = React.useState(false);
   const [dadoInscrito, setDadoInscrito] = useState('');
 
@@ -376,7 +391,7 @@ function App() {
           </div>
         </div>
       )}
-      {showLoader && <Loader />}
+      {showLoader && <Loader showMsg={true} />}
       <Palette
         src={selectedEvent?.image_url}
         colorCount={3}
