@@ -144,6 +144,7 @@ export const Certificate = styled.div`
   background-size: auto 100%;
 
   .div__name {
+    z-index: 5;
     margin-top: 1cm;
     max-width: 900px;
     height: 4.233cm;
@@ -161,6 +162,7 @@ export const Certificate = styled.div`
     font-size: 19px;
     text-align: center;
     font-weight: 600;
+    z-index: 5;
   }
 
   .div__date_field {
@@ -168,6 +170,7 @@ export const Certificate = styled.div`
     text-align: right;
     margin-top: 0.5cm;
     margin-right: 5cm;
+    z-index: 5;
   }
 
   .div__footer {
@@ -176,6 +179,7 @@ export const Certificate = styled.div`
     font-size: 10.64px;
     max-width: 900px;
     width: 100%;
+    z-index: 5;
 
     div {
       margin-top: 1.5cm;
@@ -186,6 +190,7 @@ export const Certificate = styled.div`
     }
     .div__teacher {
       position: relative;
+      z-index: 5;
 
       img {
         position: absolute;
@@ -194,5 +199,16 @@ export const Certificate = styled.div`
         max-width: 200px;
       }
     }
+  }
+  .img__bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    object-fit: cover;
+    z-index: 1;
+    width: 29.7cm;
+    height: 20.75cm;
   }
 `;

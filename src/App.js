@@ -3,7 +3,7 @@ import { Container, Contentout } from './styles';
 import './App.css';
 
 // react-router-dom
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 // ticket preview
 import Previaetiqueta from './components/Previaetiqueta';
 
@@ -39,6 +39,7 @@ function App() {
 }
 
 function PrintCredential() {
+  let navigate = useNavigate();
   const [habimp, setHabimp] = React.useState(false);
   const [dadoInscrito, setDadoInscrito] = useState('');
 
@@ -204,6 +205,8 @@ function PrintCredential() {
         .catch((error) => {
           console.log('[error]=> ', error.data);
         });
+    } else {
+      return navigate('/certificado');
     }
   }
 

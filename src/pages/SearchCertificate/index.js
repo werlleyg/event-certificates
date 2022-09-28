@@ -335,6 +335,12 @@ export function SearchCertificate() {
             CPF: {dataToPrint.cpf}
           </div>
         </div>
+        <img
+          src={
+            selectBackgroundImage(dataToPrint.certificate_type)?.backgroundImage
+          }
+          className="img__bg"
+        />
       </Certificate>
       {/* depois mudar de lugar  */}
     </>
