@@ -62,7 +62,6 @@ export function SearchCertificate() {
   async function getEvents() {
     const urlParams = new URLSearchParams(window.location.search);
     const myParam = urlParams.get('evento');
-    console.log('[ID DO EVENTO] =>', myParam);
 
     await api
       .get('/events')
@@ -89,13 +88,11 @@ export function SearchCertificate() {
 
   async function getCertificates(event) {
     event.preventDefault();
-    console.log('[submetendo evento]');
 
     await api
       .get(`/subscriptions/done_events/${cpfInscrito}`)
       .then((response) => {
         let res = response.data;
-        console.log('[resposta]=> ', res);
         setSubscriberData(res);
         setShowMyListCertificates(true);
       })
@@ -283,7 +280,6 @@ export function SearchCertificate() {
                 terc_color: data[2][0] + ',' + data[2][1] + ',' + data[2][2],
               };
               setAverageColor(auxColors);
-              console.log('[cores predominantes]=> ', auxColors);
             }
           }}
         </Palette>

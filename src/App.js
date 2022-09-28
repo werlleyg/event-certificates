@@ -88,7 +88,6 @@ function PrintCredential() {
       }
     } else if (dadoInscrito.length === 14) {
       let response = await getApi(dadoInscrito, 'cpf');
-      console.log('[response]=> ', response);
       if (response) {
         setDadosImpre({
           show: true,
@@ -189,7 +188,6 @@ function PrintCredential() {
   async function getEvents() {
     const urlParams = new URLSearchParams(window.location.search);
     const myParam = urlParams.get('evento');
-    console.log('[ID DO EVENTO] =>', myParam);
 
     if (myParam) {
       await api
@@ -229,7 +227,6 @@ function PrintCredential() {
     // const img = new Image();
     // img.addEventListener('load', function () {
     //   let resultColor = colorThief.getColor(img);
-    //   console.log('[cor resultante]=> ', resultColor);
     // });
     // img.crossOrigin = 'Anonymous';
     // img.src =
@@ -406,7 +403,6 @@ function PrintCredential() {
               terc_color: data[2][0] + ',' + data[2][1] + ',' + data[2][2],
             };
             setAverageColor(auxColors);
-            console.log('[cores predominantes]=> ', auxColors);
           }
         }}
       </Palette>

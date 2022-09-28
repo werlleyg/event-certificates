@@ -115,7 +115,6 @@ export default function AlertDialog(props) {
               averageColor={props.averageColor}
               credencialfundo={checkBackgroundImage}
             >
-              {console.log('Average color => ', props.averageColor)}
               <div className="cardParaImpressao">
                 {dados ? (
                   <div className="comDados">
