@@ -65,7 +65,7 @@ export const Container = styled.div`
         border-radius: 5rem;
         margin: auto 1rem;
 
-        input[type='text'] {
+        input[type='tel'] {
           font-size: 1.5rem;
           padding: 0.5rem 0.25rem;
           border: 0;

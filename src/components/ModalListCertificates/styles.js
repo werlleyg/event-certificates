@@ -13,11 +13,11 @@ export const Container = styled.div`
   /* min-height: 100vh; */
   /* max-height: 100%; */
 
-  animation: ${(props) => (props.showEffect ? 'slidein 3s ease' : '')};
+  animation: ${(props) => (props.showEffect ? 'slidein 2s ease-out' : '')};
 
   @keyframes slidein {
     0% {
-      top: -100%;
+      top: -120%;
       background: transparent;
     }
     100% {
@@ -180,6 +180,11 @@ export const Container = styled.div`
       flex-direction: column;
       align-items: center;
       gap: 1rem;
+
+      h1 {
+        text-align: center;
+        padding: 1rem 0rem;
+      }
 
       .div__content_user {
         text-align: center;

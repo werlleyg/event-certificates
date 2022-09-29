@@ -234,7 +234,7 @@ export function SearchCertificate() {
             >
               <label>
                 <input
-                  type="text"
+                  type="tel"
                   placeholder="Seu CPF"
                   id="input_cpf"
                   value={cpfInscrito}
