@@ -5,11 +5,12 @@ export const Container = styled.div`
   position: absolute;
   background: #f3f3f3;
   top: 0;
-  bottom: 0;
+  /* bottom: 0; */
   left: 0;
   right: 0;
   padding: 2rem;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  /* max-height: 100%; */
 
   animation: ${(props) => (props.showEffect ? 'slidein 3s ease' : '')};
 

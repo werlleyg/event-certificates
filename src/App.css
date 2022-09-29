@@ -3,8 +3,12 @@
   --wpp-color: 52, 175, 35;
   --gmail-color: 234, 67, 53;
 }
+html {
+  scroll-behavior: smooth;
+}
 .App {
   text-align: center;
+  scroll-behavior: smooth;
 }
 * {
   padding: 0;

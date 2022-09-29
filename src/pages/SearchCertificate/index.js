@@ -7,6 +7,10 @@ import api from '../../servicos/api';
 
 import { Contentout, Container, Certificate } from './styles';
 
+// to print
+import html2canvas from 'html2canvas';
+import jsPdf from 'jspdf';
+
 // icons
 import { IoSend } from 'react-icons/io5';
 import { ModalListCertificates } from '../../components/ModalListCertificates';
@@ -20,6 +24,7 @@ function Alert(props) {
 }
 
 export function SearchCertificate() {
+  const [showBlur, setShowBlur] = useState(false);
   const [averageColor, setAverageColor] = useState();
   const [selectedEvent, setSelectedEvent] = useState();
   const [showLoader, setShowLoader] = useState(true);
@@ -95,6 +100,7 @@ export function SearchCertificate() {
         let res = response.data;
         setSubscriberData(res);
         setShowMyListCertificates(true);
+        window?.scrollTo(0, 10);
       })
       .catch((error) => {
         setAlertas({
@@ -155,6 +161,8 @@ export function SearchCertificate() {
   }, []);
 
   const setPrintCertificate = useCallback((userDataPrint) => {
+    setShowBlur(true);
+    setShowLoader(true);
     setDataToPrint({
       certificate_type: userDataPrint?.certificate_type,
       name: userDataPrint?.name,
@@ -167,7 +175,29 @@ export function SearchCertificate() {
     });
 
     setTimeout(() => {
-      window.print();
+      // window.print();
+      const domElement = document.querySelector('#container');
+      html2canvas(domElement, {
+        scale: 2,
+        onclone: (document) => {
+          document.querySelector('#container').style.visibility = 'visible';
+          document.querySelector('#container').style.zIndex = '500';
+          document.querySelector('#container').style.position = 'initial';
+          document.querySelector('#container').style.display = 'flex';
+          document.querySelector('.img__bg').style.display = 'none';
+          document.querySelector('div').style.zIndex = '502';
+        },
+      }).then(function (canvas) {
+        const img = canvas.toDataURL('image/png');
+        const pdf = new jsPdf({
+          orientation: 'landscape',
+          unit: 'cm',
+        });
+        pdf.addImage(img, 'PNG', 0, 0, 29.7, 21);
+        pdf.save(`meu-certificado-${userDataPrint.name}.pdf`);
+        setShowLoader(false);
+        setShowBlur(false);
+      });
     }, 500);
   }, []);
 
@@ -218,6 +248,13 @@ export function SearchCertificate() {
                   <IoSend />
                 </button>
               </label>
+              <button
+                className="btn__submit_mobile"
+                type="submit"
+                disabled={unMask(cpfInscrito).length !== 11}
+              >
+                Buscar <IoSend />
+              </button>
 
               <div className="div__list_logos">
                 <h4>Empresas do grupo</h4>
@@ -283,11 +320,12 @@ export function SearchCertificate() {
             }
           }}
         </Palette>
-        {showLoader && <Loader showMsg={false} />}
+        {showLoader && <Loader showMsg={false} showBlur={showBlur} />}
       </Contentout>
       {/* depois mudar de lugar  */}
       <Certificate
         dataCertificate={selectBackgroundImage(dataToPrint.certificate_type)}
+        id="container"
       >
         <div className="div__name">
           <h1>{dataToPrint.name}</h1>

@@ -1,8 +1,9 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { Container } from './styles';
 
 export function Loader(props) {
+  const [showBlur, setShowBlur] = useState(props?.showBlur | false);
   const checkQueryParams = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const courseId = urlParams.get('evento');
@@ -15,7 +16,7 @@ export function Loader(props) {
   };
 
   return (
-    <Container>
+    <Container showBlur={showBlur}>
       {checkQueryParams()}
       <span class="loader"></span>
     </Container>

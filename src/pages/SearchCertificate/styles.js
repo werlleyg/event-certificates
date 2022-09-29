@@ -21,7 +21,10 @@ export const Container = styled.div`
     background-image: linear-gradient(
       to top,
       rgba(0, 0, 0, 1),
-      ${(props) => 'rgba(' + props.averageColor?.terc_color + ', 0.8)'}
+      ${(props) =>
+        'rgba(' +
+        (props.averageColor?.terc_color || 'var(--primary-color)') +
+        ', 0.8)'}
     );
     /* rgba(0, 0, 0, 0.6) */
   }
@@ -86,7 +89,40 @@ export const Container = styled.div`
           &:not([disabled]) {
             cursor: pointer;
           }
+
+          @media screen and (max-width: 560px){
+            display: none;
+          } 
         }
+      }
+      .btn__submit_mobile {
+        background-color: white;
+        padding: 0.25rem 1rem;
+        border: 0;
+        border-radius: 5rem;
+        margin: auto 1rem;
+        margin-top: 1rem;
+        height: 3rem;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size 1.5rem;
+        cursor: pointer;
+        display: none;
+
+        background-color: ${(props) =>
+          'rgba(' +
+          (props.averageColor?.terc_color || 'var(--primary-color)') +
+          ')'};
+          color: white;
+
+          @media screen and (max-width: 560px){
+            display: flex;
+          } 
+      }
+      .btn__submit_mobile[disabled]{
+        opacity: 0.5;
+        cursor: default;
       }
       .div__list_logos {
         margin-top: 3rem;

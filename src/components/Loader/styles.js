@@ -5,8 +5,10 @@ export const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 1);
+  /* bottom: 0; */
+  height: 100%;
+  background-color: ${(props) =>
+    props.showBlur ? 'rgba(255,255,255,0.1)' : ' rgba(255, 255, 255, 1)'};
   z-index: 100;
 
   display: flex;
