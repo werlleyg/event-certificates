@@ -15,6 +15,7 @@ export default function AlertDialog(props) {
   const [listBgs, setListBgs] = React.useState({
     telecom: '../files/images/bg_credencial.jpg',
     sst: '../files/images/bg_credencial_sst.jpg',
+    e2d: '../files/images/bg_credencial_e2d.jpg',
   });
 
   const handleClickOpen = () => {
@@ -70,6 +71,10 @@ export default function AlertDialog(props) {
       props.selectedEvent?.title?.toLowerCase().indexOf('nr35') > -1
     ) {
       return listBgs.sst;
+    } else if (
+      props.selectedEvent?.title?.toLowerCase().indexOf('[e2d]') > -1
+    ) {
+      return listBgs.e2d;
     } else {
       return listBgs.telecom;
     }
@@ -95,8 +100,8 @@ export default function AlertDialog(props) {
         open={open}
         fullScreen
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
         style={{ padding: 0, margin: 0 }}
         PaperProps={{
           style: {
@@ -108,37 +113,37 @@ export default function AlertDialog(props) {
         {/* <DialogTitle id="alert-dialog-title">{""}</DialogTitle> */}
         <DialogContent style={{ padding: 0, margin: 0 }}>
           <DialogContentText
-            id="alert-dialog-description"
+            id='alert-dialog-description'
             style={{ padding: 0, margin: 0 }}
           >
             <Container
               averageColor={props.averageColor}
               credencialfundo={checkBackgroundImage}
             >
-              <div className="cardParaImpressao">
+              <div className='cardParaImpressao'>
                 {dados ? (
-                  <div className="comDados">
-                    <div className="div__cabecalho">
+                  <div className='comDados'>
+                    <div className='div__cabecalho'>
                       Confirma suas informações <br /> para impressão?
-                      <div className="div__opcoes">
+                      <div className='div__opcoes'>
                         <span onClick={() => validarComTouch()}>
-                          <div className="button__image">1</div> - SIM
+                          <div className='button__image'>1</div> - SIM
                         </span>
                         <span onClick={() => props.cancelar()}>
-                          <div className="button__image">2</div> - NÃO
+                          <div className='button__image'>2</div> - NÃO
                         </span>
                       </div>
                     </div>
-                    <div className="etiqueta">
-                      <div className="informacoes" id="sua_div">
+                    <div className='etiqueta'>
+                      <div className='informacoes' id='sua_div'>
                         <p>{verificarNome(dados.credential_name)}</p>
 
                         {/* <p className="infor2">{dados.credential_role}</p> */}
-                        <p className="infor2">{dados.credential_company}</p>
+                        <p className='infor2'>{dados.credential_company}</p>
                         {/* testes */}
-                        <div className="div__cod_barra">
+                        <div className='div__cod_barra'>
                           {/* {props.dados.id_code} */}
-                          <svg id="barcode1"></svg>
+                          <svg id='barcode1'></svg>
                         </div>
                       </div>
                     </div>
