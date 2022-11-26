@@ -16,6 +16,7 @@ export default function AlertDialog(props) {
     telecom: '../files/images/bg_credencial.jpg',
     sst: '../files/images/bg_credencial_sst.jpg',
     e2d: '../files/images/bg_credencial_e2d.jpg',
+    atour: '../files/images/bg_credencial_atour.jpg',
   });
 
   const handleClickOpen = () => {
@@ -75,6 +76,8 @@ export default function AlertDialog(props) {
       props.selectedEvent?.title?.toLowerCase().indexOf('[e2d]') > -1
     ) {
       return listBgs.e2d;
+    } else if (props.selectedEvent?.title?.toLowerCase().indexOf('tour') > -1) {
+      return listBgs.atour;
     } else {
       return listBgs.telecom;
     }
