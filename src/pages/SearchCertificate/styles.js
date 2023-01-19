@@ -90,9 +90,9 @@ export const Container = styled.div`
             cursor: pointer;
           }
 
-          @media screen and (max-width: 560px){
+          @media screen and (max-width: 560px) {
             display: none;
-          } 
+          }
         }
       }
       .btn__submit_mobile {
@@ -106,7 +106,7 @@ export const Container = styled.div`
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        font-size 1.5rem;
+        font-size: 1.5rem;
         cursor: pointer;
         display: none;
 
@@ -114,13 +114,13 @@ export const Container = styled.div`
           'rgba(' +
           (props.averageColor?.terc_color || 'var(--primary-color)') +
           ')'};
-          color: white;
+        color: white;
 
-          @media screen and (max-width: 560px){
-            display: flex;
-          } 
+        @media screen and (max-width: 560px) {
+          display: flex;
+        }
       }
-      .btn__submit_mobile[disabled]{
+      .btn__submit_mobile[disabled] {
         opacity: 0.5;
         cursor: default;
       }
@@ -188,7 +188,8 @@ export const Certificate = styled.div`
     align-items: center;
     justify-content: center;
     h1 {
-      font-size: 60px;
+      font-size: ${(props) =>
+        props.eventVerifyFirstTalkCircle ? '22px' : '60px'};
       text-align: center;
     }
   }

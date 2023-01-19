@@ -20,7 +20,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
 export function SearchCertificate() {
@@ -57,6 +57,10 @@ export function SearchCertificate() {
     {
       type: 'treinamento',
       backgroundImage: '../files/images/bg_certificates/model_02.png',
+    },
+    {
+      type: 'first_talk_circle',
+      backgroundImage: '../files/images/bg_certificates/model_palesta_comp.png',
     },
   ]);
 
@@ -160,11 +164,21 @@ export function SearchCertificate() {
     return 'error';
   }, []);
 
+  const selectCertificateType = useCallback((auxUserDataPrint) => {
+    if (
+      auxUserDataPrint?.title?.toLowerCase().indexOf('i ciclo de palestras') >
+      -1
+    )
+      return 'first_talk_circle';
+
+    return auxUserDataPrint?.certificate_type;
+  }, []);
+
   const setPrintCertificate = useCallback((userDataPrint) => {
     setShowBlur(true);
     setShowLoader(true);
     setDataToPrint({
-      certificate_type: userDataPrint?.certificate_type,
+      certificate_type: selectCertificateType(userDataPrint),
       name: userDataPrint?.name,
       cpf: userDataPrint?.cpf,
       location: userDataPrint?.userSelectedEvent?.location,
@@ -202,14 +216,19 @@ export function SearchCertificate() {
   }, []);
 
   const selectBackgroundImage = useCallback(
-    (certificate_type = 'event_ufc') => {
+    (certificate_type) => {
       let bgImageSelected = listDataCertificate.find(
         (dataBg) => dataBg.type === certificate_type,
       );
       return bgImageSelected;
     },
-    [],
+    [listDataCertificate],
   );
+
+  const eventVerifyFirstTalkCircle = useCallback((dataEventType) => {
+    if (dataEventType === 'first_talk_circle') return true;
+    return false;
+  }, []);
 
   useEffect(() => {
     getEvents();
@@ -223,44 +242,44 @@ export function SearchCertificate() {
           averageColor={averageColor}
           dadoInscrito={unMask(cpfInscrito)}
         >
-          <div className="div__content">
+          <div className='div__content'>
             <h1>Buscar Certificados</h1>
 
             <form
-              className="etiqueta"
+              className='etiqueta'
               onSubmit={getCertificates}
               // onSubmit={handleSubmit}
-              autoComplete="off"
+              autoComplete='off'
             >
               <label>
                 <input
-                  type="tel"
-                  placeholder="Seu CPF"
-                  id="input_cpf"
+                  type='tel'
+                  placeholder='Seu CPF'
+                  id='input_cpf'
                   value={cpfInscrito}
                   onChange={handleChange}
                   autoFocus
                 />
                 <button
-                  type="submit"
+                  type='submit'
                   disabled={unMask(cpfInscrito).length !== 11}
                 >
                   <IoSend />
                 </button>
               </label>
               <button
-                className="btn__submit_mobile"
-                type="submit"
+                className='btn__submit_mobile'
+                type='submit'
                 disabled={unMask(cpfInscrito).length !== 11}
               >
                 Buscar <IoSend />
               </button>
 
-              <div className="div__list_logos">
+              <div className='div__list_logos'>
                 <h4>Empresas do grupo</h4>
                 <img
-                  src="../files/images/list-logos.png"
-                  alt="Logo Ágil Engenharia"
+                  src='../files/images/list-logos.png'
+                  alt='Logo Ágil Engenharia'
                 />
               </div>
             </form>
@@ -294,7 +313,7 @@ export function SearchCertificate() {
               </Snackbar>
             )}
           </div>
-          <div className="div__bg_gradient" />
+          <div className='div__bg_gradient' />
           {showMyListCertificates && (
             <ModalListCertificates
               logout={clearData}
@@ -306,8 +325,8 @@ export function SearchCertificate() {
         <Palette
           src={selectedEvent?.image_url}
           colorCount={3}
-          crossOrigin="anonymous"
-          format="rgbArray"
+          crossOrigin='anonymous'
+          format='rgbArray'
         >
           {({ data, loading, error }) => {
             if (data && !averageColor) {
@@ -324,13 +343,18 @@ export function SearchCertificate() {
       </Contentout>
       {/* depois mudar de lugar  */}
       <Certificate
-        dataCertificate={selectBackgroundImage(dataToPrint.certificate_type)}
-        id="container"
+        dataCertificate={selectBackgroundImage(
+          selectCertificateType(dataToPrint),
+        )}
+        eventVerifyFirstTalkCircle={eventVerifyFirstTalkCircle(
+          dataToPrint.certificate_type,
+        )}
+        id='container'
       >
-        <div className="div__name">
+        <div className='div__name'>
           <h1>{dataToPrint.name}</h1>
         </div>
-        <div className="div__content_center_text">
+        <div className='div__content_center_text'>
           O <strong>Eng. Alan Araújo, M.Sc</strong> confere ao referido aluno o
           certificado de participação no{' '}
           {dataToPrint.certificate_type === 'treinamento' ? 'curso' : 'evento'}{' '}
@@ -338,7 +362,7 @@ export function SearchCertificate() {
           {utilFormatedDate(dataToPrint.start_date, dataToPrint.end_date)}, com
           total de <strong>{dataToPrint.duration}</strong>.
         </div>
-        <div className="div__date_field">
+        <div className='div__date_field'>
           <strong>
             {new Date(dataToPrint.end_date).toLocaleDateString('pt-BR', {
               day: '2-digit',
@@ -348,11 +372,11 @@ export function SearchCertificate() {
             , {dataToPrint.location}
           </strong>
         </div>
-        <div className="div__footer">
-          <div className="div__teacher">
+        <div className='div__footer'>
+          <div className='div__teacher'>
             <img
-              src="../files/images/comprovante/rubrica_azul.png"
-              alt="rubrica"
+              src='../files/images/comprovante/rubrica_azul.png'
+              alt='rubrica'
             />
             <strong>Antonio Alan Rodrigues de Araújo</strong>
             <br />
@@ -367,7 +391,7 @@ export function SearchCertificate() {
             CREA-CE: 51905-D
             <br />
           </div>
-          <div className="div__student">
+          <div className='div__student'>
             <strong>{dataToPrint.name}</strong>
             <br />
             CPF: {dataToPrint.cpf}
@@ -375,9 +399,10 @@ export function SearchCertificate() {
         </div>
         <img
           src={
-            selectBackgroundImage(dataToPrint.certificate_type)?.backgroundImage
+            selectBackgroundImage(selectCertificateType(dataToPrint))
+              ?.backgroundImage
           }
-          className="img__bg"
+          className='img__bg'
         />
       </Certificate>
       {/* depois mudar de lugar  */}
