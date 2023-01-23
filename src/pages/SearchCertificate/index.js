@@ -176,8 +176,6 @@ export function SearchCertificate() {
 
   const setPrintCertificate = useCallback(
     (userDataPrint) => {
-      console.log('[userDataPrint]=> ', userDataPrint);
-
       userDataPrint = {
         ...userDataPrint,
         userSelectedEvent: {
@@ -198,8 +196,6 @@ export function SearchCertificate() {
         end_date: userDataPrint?.userSelectedEvent?.end_date,
         duration: userDataPrint?.userSelectedEvent?.duration,
       };
-
-      console.log('[ selectCertificateType(userDataPrint)]=> ', auxValue);
 
       setShowBlur(true);
       setShowLoader(true);
