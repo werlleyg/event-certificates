@@ -189,7 +189,7 @@ export const Certificate = styled.div`
     justify-content: center;
     h1 {
       font-size: ${(props) =>
-        props.eventVerifyFirstTalkCircle ? '22px' : '60px'};
+        props.eventVerifyFirstTalkCircle ? '32px' : '60px'};
       text-align: center;
     }
   }
@@ -208,6 +208,9 @@ export const Certificate = styled.div`
     margin-top: 0.5cm;
     margin-right: 5cm;
     z-index: 5;
+
+    visibility: ${(props) =>
+      props.eventVerifyFirstTalkCircle ? 'hidden' : 'visible'};
   }
 
   .div__footer {

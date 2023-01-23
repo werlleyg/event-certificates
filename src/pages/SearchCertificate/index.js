@@ -20,7 +20,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 export function SearchCertificate() {
@@ -174,51 +174,70 @@ export function SearchCertificate() {
     return auxUserDataPrint?.certificate_type;
   }, []);
 
-  const setPrintCertificate = useCallback((userDataPrint) => {
-    setShowBlur(true);
-    setShowLoader(true);
-    setDataToPrint({
-      certificate_type: selectCertificateType(userDataPrint),
-      name: userDataPrint?.name,
-      cpf: userDataPrint?.cpf,
-      location: userDataPrint?.userSelectedEvent?.location,
-      title: userDataPrint?.userSelectedEvent?.title,
-      start_date: userDataPrint?.userSelectedEvent?.start_date,
-      end_date: userDataPrint?.userSelectedEvent?.end_date,
-      duration: userDataPrint?.userSelectedEvent?.duration,
-    });
+  const setPrintCertificate = useCallback(
+    (userDataPrint) => {
+      console.log('[userDataPrint]=> ', userDataPrint);
 
-    setTimeout(() => {
-      // window.print();
-      const domElement = document.querySelector('#container');
-      html2canvas(domElement, {
-        scale: 2,
-        onclone: (document) => {
-          document.querySelector('#container').style.visibility = 'visible';
-          document.querySelector('#container').style.zIndex = '500';
-          document.querySelector('#container').style.position = 'initial';
-          document.querySelector('#container').style.display = 'flex';
-          document.querySelector('.img__bg').style.display = 'none';
-          document.querySelector('div').style.zIndex = '502';
+      userDataPrint = {
+        ...userDataPrint,
+        userSelectedEvent: {
+          ...userDataPrint.userSelectedEvent,
+          certificate_type: userDataPrint.certificate_type,
         },
-      }).then(function (canvas) {
-        const img = canvas.toDataURL('image/png');
-        const pdf = new jsPdf({
-          orientation: 'landscape',
-          unit: 'cm',
+      };
+
+      const auxValue = {
+        certificate_type: selectCertificateType(
+          userDataPrint.userSelectedEvent,
+        ),
+        name: userDataPrint?.name,
+        cpf: userDataPrint?.cpf,
+        location: userDataPrint?.userSelectedEvent?.location,
+        title: userDataPrint?.userSelectedEvent?.title,
+        start_date: userDataPrint?.userSelectedEvent?.start_date,
+        end_date: userDataPrint?.userSelectedEvent?.end_date,
+        duration: userDataPrint?.userSelectedEvent?.duration,
+      };
+
+      console.log('[ selectCertificateType(userDataPrint)]=> ', auxValue);
+
+      setShowBlur(true);
+      setShowLoader(true);
+      setDataToPrint(auxValue);
+
+      setTimeout(() => {
+        // window.print();
+        const domElement = document.querySelector('#container');
+        html2canvas(domElement, {
+          scale: 2,
+          onclone: (document) => {
+            document.querySelector('#container').style.visibility = 'visible';
+            document.querySelector('#container').style.zIndex = '500';
+            document.querySelector('#container').style.position = 'initial';
+            document.querySelector('#container').style.display = 'flex';
+            document.querySelector('.img__bg').style.display = 'none';
+            document.querySelector('div').style.zIndex = '502';
+          },
+        }).then(function (canvas) {
+          const img = canvas.toDataURL('image/png');
+          const pdf = new jsPdf({
+            orientation: 'landscape',
+            unit: 'cm',
+          });
+          pdf.addImage(img, 'PNG', 0, 0, 29.7, 21);
+          pdf.save(`meu-certificado-${userDataPrint.name}.pdf`);
+          setShowLoader(false);
+          setShowBlur(false);
         });
-        pdf.addImage(img, 'PNG', 0, 0, 29.7, 21);
-        pdf.save(`meu-certificado-${userDataPrint.name}.pdf`);
-        setShowLoader(false);
-        setShowBlur(false);
-      });
-    }, 500);
-  }, []);
+      }, 500);
+    },
+    [selectCertificateType],
+  );
 
   const selectBackgroundImage = useCallback(
     (certificate_type) => {
       let bgImageSelected = listDataCertificate.find(
-        (dataBg) => dataBg.type === certificate_type,
+        (dataBg) => dataBg.type == certificate_type,
       );
       return bgImageSelected;
     },
@@ -242,44 +261,44 @@ export function SearchCertificate() {
           averageColor={averageColor}
           dadoInscrito={unMask(cpfInscrito)}
         >
-          <div className='div__content'>
+          <div className="div__content">
             <h1>Buscar Certificados</h1>
 
             <form
-              className='etiqueta'
+              className="etiqueta"
               onSubmit={getCertificates}
               // onSubmit={handleSubmit}
-              autoComplete='off'
+              autoComplete="off"
             >
               <label>
                 <input
-                  type='tel'
-                  placeholder='Seu CPF'
-                  id='input_cpf'
+                  type="tel"
+                  placeholder="Seu CPF"
+                  id="input_cpf"
                   value={cpfInscrito}
                   onChange={handleChange}
                   autoFocus
                 />
                 <button
-                  type='submit'
+                  type="submit"
                   disabled={unMask(cpfInscrito).length !== 11}
                 >
                   <IoSend />
                 </button>
               </label>
               <button
-                className='btn__submit_mobile'
-                type='submit'
+                className="btn__submit_mobile"
+                type="submit"
                 disabled={unMask(cpfInscrito).length !== 11}
               >
                 Buscar <IoSend />
               </button>
 
-              <div className='div__list_logos'>
+              <div className="div__list_logos">
                 <h4>Empresas do grupo</h4>
                 <img
-                  src='../files/images/list-logos.png'
-                  alt='Logo Ágil Engenharia'
+                  src="../files/images/list-logos.png"
+                  alt="Logo Ágil Engenharia"
                 />
               </div>
             </form>
@@ -313,7 +332,7 @@ export function SearchCertificate() {
               </Snackbar>
             )}
           </div>
-          <div className='div__bg_gradient' />
+          <div className="div__bg_gradient" />
           {showMyListCertificates && (
             <ModalListCertificates
               logout={clearData}
@@ -325,8 +344,8 @@ export function SearchCertificate() {
         <Palette
           src={selectedEvent?.image_url}
           colorCount={3}
-          crossOrigin='anonymous'
-          format='rgbArray'
+          crossOrigin="anonymous"
+          format="rgbArray"
         >
           {({ data, loading, error }) => {
             if (data && !averageColor) {
@@ -342,69 +361,84 @@ export function SearchCertificate() {
         {showLoader && <Loader showMsg={false} showBlur={showBlur} />}
       </Contentout>
       {/* depois mudar de lugar  */}
-      <Certificate
-        dataCertificate={selectBackgroundImage(
-          selectCertificateType(dataToPrint),
-        )}
-        eventVerifyFirstTalkCircle={eventVerifyFirstTalkCircle(
-          dataToPrint.certificate_type,
-        )}
-        id='container'
-      >
-        <div className='div__name'>
-          <h1>{dataToPrint.name}</h1>
-        </div>
-        <div className='div__content_center_text'>
-          O <strong>Eng. Alan Araújo, M.Sc</strong> confere ao referido aluno o
-          certificado de participação no{' '}
-          {dataToPrint.certificate_type === 'treinamento' ? 'curso' : 'evento'}{' '}
-          <strong>{dataToPrint.title}</strong>,{' '}
-          {utilFormatedDate(dataToPrint.start_date, dataToPrint.end_date)}, com
-          total de <strong>{dataToPrint.duration}</strong>.
-        </div>
-        <div className='div__date_field'>
-          <strong>
-            {new Date(dataToPrint.end_date).toLocaleDateString('pt-BR', {
-              day: '2-digit',
-              month: 'long',
-              year: 'numeric',
-            })}
-            , {dataToPrint.location}
-          </strong>
-        </div>
-        <div className='div__footer'>
-          <div className='div__teacher'>
-            <img
-              src='../files/images/comprovante/rubrica_azul.png'
-              alt='rubrica'
-            />
-            <strong>Antonio Alan Rodrigues de Araújo</strong>
-            <br />
-            Engenheiro de Computação
-            <br />
-            Engenheiro de Segurança do Trabalho
-            <br />
-            Especialista em Engenharia Elétrica
-            <br />
-            Mestre em Engenharia Elétrica e de Computação
-            <br />
-            CREA-CE: 51905-D
-            <br />
+      {dataToPrint.title && (
+        <Certificate
+          dataCertificate={selectBackgroundImage(
+            selectCertificateType(dataToPrint),
+          )}
+          eventVerifyFirstTalkCircle={eventVerifyFirstTalkCircle(
+            dataToPrint.certificate_type,
+          )}
+          id="container"
+        >
+          <div className="div__name">
+            <h1>{dataToPrint.name}</h1>
           </div>
-          <div className='div__student'>
-            <strong>{dataToPrint.name}</strong>
-            <br />
-            CPF: {dataToPrint.cpf}
+
+          {eventVerifyFirstTalkCircle(dataToPrint.certificate_type) ? (
+            <div className="div__content_center_text">
+              Na palestra <strong>{dataToPrint.title}</strong> do evento "I
+              Ciclo de Palest ras" promovido pelo grupo PET-CEC.
+            </div>
+          ) : (
+            <div className="div__content_center_text">
+              O <strong>Eng. Alan Araújo, M.Sc</strong> confere ao referido
+              aluno o certificado de participação no{' '}
+              {dataToPrint.certificate_type === 'treinamento'
+                ? 'curso'
+                : 'evento'}{' '}
+              <strong>{dataToPrint.title}</strong>,{' '}
+              {utilFormatedDate(dataToPrint.start_date, dataToPrint.end_date)},
+              com total de <strong>{dataToPrint.duration}</strong>.
+            </div>
+          )}
+
+          <div className="div__date_field">
+            <strong>
+              {new Date(dataToPrint.end_date).toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+              })}
+              , {dataToPrint.location}
+            </strong>
           </div>
-        </div>
-        <img
-          src={
-            selectBackgroundImage(selectCertificateType(dataToPrint))
-              ?.backgroundImage
-          }
-          className='img__bg'
-        />
-      </Certificate>
+          {!eventVerifyFirstTalkCircle(dataToPrint.certificate_type) && (
+            <div className="div__footer">
+              <div className="div__teacher">
+                <img
+                  src="../files/images/comprovante/rubrica_azul.png"
+                  alt="rubrica"
+                />
+                <strong>Antonio Alan Rodrigues de Araújo</strong>
+                <br />
+                Engenheiro de Computação
+                <br />
+                Engenheiro de Segurança do Trabalho
+                <br />
+                Especialista em Engenharia Elétrica
+                <br />
+                Mestre em Engenharia Elétrica e de Computação
+                <br />
+                CREA-CE: 51905-D
+                <br />
+              </div>
+              <div className="div__student">
+                <strong>{dataToPrint.name}</strong>
+                <br />
+                CPF: {dataToPrint.cpf}
+              </div>
+            </div>
+          )}
+          <img
+            src={
+              selectBackgroundImage(selectCertificateType(dataToPrint))
+                ?.backgroundImage
+            }
+            className="img__bg"
+          />
+        </Certificate>
+      )}
       {/* depois mudar de lugar  */}
     </>
   );

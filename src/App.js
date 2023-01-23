@@ -22,17 +22,19 @@ import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 import Color, { Palette, usePalette } from 'color-thief-react';
 import { Loader } from './components/Loader';
 import { SearchCertificate } from './pages/SearchCertificate';
+import { NewCertificate } from './pages/NewCertificate';
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/certificado' element={<SearchCertificate />} />
-        <Route path='/' element={<PrintCredential />} />
+        <Route path="/novo-certificado" element={<NewCertificate />} />
+        <Route path="/certificado" element={<SearchCertificate />} />
+        <Route path="/" element={<PrintCredential />} />
       </Routes>
     </BrowserRouter>
   );
@@ -238,44 +240,44 @@ function PrintCredential() {
 
   return (
     <>
-      <div className='App'>
+      <div className="App">
         <Contentout>
           <Container
             imageBg={selectedEvent?.image_url}
             averageColor={averageColor}
           >
-            <div className='div__content'>
-              <div className='div__oneRow'>
-                <div className='div__content_image'>
-                  <img src={selectedEvent?.image_url} id='event_image' />
-                  <div className='div__degrade_img' alt='Banner Alan Araújo' />
+            <div className="div__content">
+              <div className="div__oneRow">
+                <div className="div__content_image">
+                  <img src={selectedEvent?.image_url} id="event_image" />
+                  <div className="div__degrade_img" alt="Banner Alan Araújo" />
                 </div>
 
                 <form
-                  className='etiqueta'
-                  action=''
+                  className="etiqueta"
+                  action=""
                   onSubmit={handleSubmit}
-                  autoComplete='off'
+                  autoComplete="off"
                 >
                   <p>Nº de Inscrição ou CPF</p>
                   {showinput && (
                     <input
-                      type='text'
-                      placeholder=''
-                      id='input_cpf'
+                      type="text"
+                      placeholder=""
+                      id="input_cpf"
                       value={dadoInscrito}
                       onChange={handleChange}
                       autoFocus
                     />
                   )}
-                  <div className='containerButton'>
-                    <button type='submit'>Buscar</button>
+                  <div className="containerButton">
+                    <button type="submit">Buscar</button>
                   </div>
-                  <div className='div__list_logos'>
+                  <div className="div__list_logos">
                     <h4>Apoio/Empresas do grupo:</h4>
                     <img
-                      src='../files/images/list-logos.png'
-                      alt='Logo Ágil Engenharia'
+                      src="../files/images/list-logos.png"
+                      alt="Logo Ágil Engenharia"
                     />
                   </div>
                 </form>
@@ -335,28 +337,28 @@ function PrintCredential() {
               )}
             </div>
 
-            <div className='div__bg_gradient' />
+            <div className="div__bg_gradient" />
           </Container>
           {dados && (
             <div
-              className='etiqueta etiqueta2'
-              id='printable'
+              className="etiqueta etiqueta2"
+              id="printable"
               style={{
                 width: '9.8cm',
                 height: '2.5cm',
               }}
             >
-              <div className='informacoes' id='sua_div'>
-                <span className='nomeCredencial'>
+              <div className="informacoes" id="sua_div">
+                <span className="nomeCredencial">
                   {verificarNome(dados.credential_name)}
                 </span>
                 {/* <span className="demaisCredencial">
                   {dados.credential_role}
                 </span> */}
-                <span className='demaisCredencial2'>
+                <span className="demaisCredencial2">
                   {dados.credential_company}
                 </span>
-                <div className='div__cod_barra'>
+                <div className="div__cod_barra">
                   {dados.id_code}
                   {/* <svg id="barcode1"></svg> */}
                 </div>
@@ -368,25 +370,25 @@ function PrintCredential() {
       </div>
       {dadosImpre && (
         <div
-          className='etiqueta etiqueta2'
-          id='printable'
+          className="etiqueta etiqueta2"
+          id="printable"
           style={{
             width: '10cm',
             height: '4cm',
           }}
         >
-          <div className='informacoes' id='sua_div'>
-            <span className='nomeCredencial'>
+          <div className="informacoes" id="sua_div">
+            <span className="nomeCredencial">
               {verificarNome(dadosImpre?.credential_name)}
             </span>
-            <span className='demaisCredencial'>
+            <span className="demaisCredencial">
               {dadosImpre?.credential_role}
             </span>
-            <span className='demaisCredencial2'>
+            <span className="demaisCredencial2">
               {dadosImpre?.credential_company}
             </span>
-            <div className='div__cod_barra'>
-              <svg id='barcode1'></svg>
+            <div className="div__cod_barra">
+              <svg id="barcode1"></svg>
             </div>
           </div>
         </div>
@@ -395,8 +397,8 @@ function PrintCredential() {
       <Palette
         src={selectedEvent?.image_url}
         colorCount={3}
-        crossOrigin='anonymous'
-        format='rgbArray'
+        crossOrigin="anonymous"
+        format="rgbArray"
       >
         {({ data, loading, error }) => {
           if (data && !averageColor) {
