@@ -62,6 +62,10 @@ export function SearchCertificate() {
       type: 'first_talk_circle',
       backgroundImage: '../files/images/bg_certificates/model_palesta_comp.png',
     },
+    {
+      type: 'event_e2d',
+      backgroundImage: '../files/images/bg_certificates/model_palesta_e2d.png',
+    },
   ]);
 
   const handleChange = (e) => {
@@ -171,6 +175,10 @@ export function SearchCertificate() {
     )
       return 'first_talk_circle';
 
+    if (auxUserDataPrint?.title?.toLowerCase().indexOf('[e2d]') > -1) {
+      return 'event_e2d';
+    }
+
     return auxUserDataPrint?.certificate_type;
   }, []);
 
@@ -242,6 +250,11 @@ export function SearchCertificate() {
 
   const eventVerifyFirstTalkCircle = useCallback((dataEventType) => {
     if (dataEventType === 'first_talk_circle') return true;
+    return false;
+  }, []);
+
+  const eventVerifyE2D = useCallback((dataEventType) => {
+    if (dataEventType === 'event_e2d') return true;
     return false;
   }, []);
 
@@ -362,9 +375,10 @@ export function SearchCertificate() {
           dataCertificate={selectBackgroundImage(
             selectCertificateType(dataToPrint),
           )}
-          eventVerifyFirstTalkCircle={eventVerifyFirstTalkCircle(
-            dataToPrint.certificate_type,
-          )}
+          eventVerifyFirstTalkCircle={
+            eventVerifyFirstTalkCircle(dataToPrint.certificate_type) ||
+            eventVerifyE2D(dataToPrint.certificate_type)
+          }
           id="container"
         >
           <div className="div__name">
@@ -375,6 +389,13 @@ export function SearchCertificate() {
             <div className="div__content_center_text">
               Na palestra <strong>{dataToPrint.title}</strong> do evento "I
               Ciclo de Palest ras" promovido pelo grupo PET-CEC.
+            </div>
+          ) : eventVerifyE2D(dataToPrint.certificate_type) ? (
+            <div className="div__content_center_text">
+              participou da palestra <strong>{dataToPrint.title}</strong> no{' '}
+              {utilFormatedDate(dataToPrint.start_date, dataToPrint.end_date)},
+              organizada pelo <strong>E2D - Engineering Two Days</strong>, com
+              carga horária de <strong>2 horas</strong>.
             </div>
           ) : (
             <div className="div__content_center_text">
@@ -399,7 +420,10 @@ export function SearchCertificate() {
               , {dataToPrint.location}
             </strong>
           </div>
-          {!eventVerifyFirstTalkCircle(dataToPrint.certificate_type) && (
+          {!(
+            eventVerifyFirstTalkCircle(dataToPrint.certificate_type) ||
+            eventVerifyE2D(dataToPrint.certificate_type)
+          ) && (
             <div className="div__footer">
               <div className="div__teacher">
                 <img

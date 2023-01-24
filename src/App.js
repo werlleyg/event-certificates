@@ -22,7 +22,6 @@ import ColorThief from '../node_modules/colorthief/dist/color-thief.mjs';
 import Color, { Palette, usePalette } from 'color-thief-react';
 import { Loader } from './components/Loader';
 import { SearchCertificate } from './pages/SearchCertificate';
-import { NewCertificate } from './pages/NewCertificate';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -32,7 +31,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/novo-certificado" element={<NewCertificate />} />
         <Route path="/certificado" element={<SearchCertificate />} />
         <Route path="/" element={<PrintCredential />} />
       </Routes>
